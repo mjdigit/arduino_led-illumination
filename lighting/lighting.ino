@@ -2,9 +2,9 @@
   Lighting
 */
 
-const int analogRedPin   = A1;
-const int analogGreenPin = A2;
-const int analogBluePin  = A3;
+const int analogRedPin   = 3;
+const int analogGreenPin = 5;
+const int analogBluePin  = 6;
 
 struct rgb {
   int red;
@@ -22,7 +22,11 @@ static struct rgb rgbValue[] = {
   {255, 255, 255},
 };
 
-static void controlLeds (int redValue, int greenValue, int blueValue) {
+static void controlLeds (int redValue, int greenValue, int blueValue, int ratio) {
+  redValue = (redValue * ratio) / 100;
+  greenValue = (greenValue * ratio) / 100;
+  blueValue = (blueValue * ratio) / 100;
+
   analogWrite (analogRedPin, redValue);
   analogWrite (analogGreenPin, greenValue);
   analogWrite (analogBluePin, blueValue);
@@ -40,10 +44,13 @@ void loop() {
   int maxcount = sizeof(rgbValue)/sizeof(rgbValue[0]);
   
   digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  controlLeds(rgbValue[count].red, rgbValue[count].green, rgbValue[count].blue);
+  for (int i = 0; i <= 100; i+=4) {
+    controlLeds(rgbValue[count].red, rgbValue[count].green, rgbValue[count].blue, i);
+    delay (100);
+  }
   delay(1000);                       // wait for a second
   digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  controlLeds(0, 0, 0);
+  controlLeds(0, 0, 0, 100);
   delay(1000);                       // wait for a second
 
   count++;
