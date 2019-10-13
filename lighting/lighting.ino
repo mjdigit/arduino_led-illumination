@@ -2,6 +2,10 @@
   Lighting
 */
 
+#include <DS3232RTC.h>  /// https://github.com/JChristensen/DS3232RTC
+
+DS3232RTC myRTC(false);
+
 const int analogRedPin   = 3;
 const int analogGreenPin = 5;
 const int analogBluePin  = 6;
@@ -34,27 +38,22 @@ static void controlLeds (int redValue, int greenValue, int blueValue, int ratio)
 
 // the setup function runs once when you press reset or power the board
 void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
-  pinMode(LED_BUILTIN, OUTPUT);
+  
+  Serial.begin(9600);
+  myRTC.begin();
 }
 
 // the loop function runs over and over again forever
 void loop() {
-  static int count = 0;
-  int maxcount = sizeof(rgbValue)/sizeof(rgbValue[0]);
-  
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  for (int i = 0; i <= 100; i+=4) {
-    controlLeds(rgbValue[count].red, rgbValue[count].green, rgbValue[count].blue, i);
-    delay (100);
-  }
-  delay(1000);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  controlLeds(0, 0, 0, 100);
-  delay(1000);                       // wait for a second
+  tmElements_t tm;
 
-  count++;
-  if (count >= maxcount) {
-    count = 0;
-  }
+  RTC.read(tm);
+  Serial.print(tm.Hour, DEC);
+  Serial.print(':');
+  Serial.print(tm.Minute,DEC);
+  Serial.print(':');
+  Serial.println(tm.Second,DEC);
+
+  controlLeds(tm.Hour * 255 / 24, tm.Minute * 255 / 60, tm.Second * 255 / 60, 100);
+  delay (500);
 }
