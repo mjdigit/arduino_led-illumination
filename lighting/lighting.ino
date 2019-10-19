@@ -6,6 +6,8 @@
 
 DS3232RTC myRTC(false);
 
+#define UPDATE_RTC  0
+
 const int analogRedPin   = 3;
 const int analogGreenPin = 5;
 const int analogBluePin  = 6;
@@ -38,9 +40,29 @@ static void controlLeds (int redValue, int greenValue, int blueValue, int ratio)
 
 // the setup function runs once when you press reset or power the board
 void setup() {
-  
+  #if UPDATE_RTC
+  char timeStr[9] = {0};
+  char *hp, *mp, *sp;
+  #endif
+
   Serial.begin(9600);
   myRTC.begin();
+
+  #if UPDATE_RTC
+  strncpy (timeStr, __TIME__, 7);
+  Serial.print ("Update RTC: ");
+  Serial.println(timeStr);
+  hp = strtok (timeStr, ":");
+  mp = strtok (NULL, ":");
+  sp = strtok (NULL, ":");
+  if (hp != NULL && mp != NULL && sp != NULL) {
+    tmElements_t tm;
+    tm.Hour   = atoi (hp);
+    tm.Minute = atoi (mp);
+    tm.Second = atoi (sp);
+    RTC.write (tm);
+  }
+  #endif
 }
 
 // the loop function runs over and over again forever
