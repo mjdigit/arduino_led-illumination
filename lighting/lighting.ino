@@ -6,7 +6,16 @@
 
 DS3232RTC myRTC(false);
 
-#define UPDATE_RTC  0
+#define UPDATE_RTC   0
+#define DEBUG_ENABLE 1
+
+#if DEBUG_ENABLE
+  #define DEBUG(x)   Serial.print x
+  #define DEBUGLN(x) Serial.println x
+#else
+  #define DEBUG(x)
+  #define DEBUGLN(x)
+#endif
 
 const int analogRedPin   = 3;
 const int analogGreenPin = 5;
@@ -45,7 +54,9 @@ void setup() {
   char *hp, *mp, *sp;
   #endif
 
-  Serial.begin(9600);
+  #if DEBUG_ENABLE
+  Serial.begin(115200);
+  #endif
   myRTC.begin();
 
   #if UPDATE_RTC
@@ -70,11 +81,11 @@ void loop() {
   tmElements_t tm;
 
   RTC.read(tm);
-  Serial.print(tm.Hour, DEC);
-  Serial.print(':');
-  Serial.print(tm.Minute,DEC);
-  Serial.print(':');
-  Serial.println(tm.Second,DEC);
+  DEBUG ((tm.Hour, DEC));
+  DEBUG ((':'));
+  DEBUG ((tm.Minute,DEC));
+  DEBUG ((':'));
+  DEBUGLN ((tm.Second,DEC));
 
   controlLeds(tm.Hour * 255 / 24, tm.Minute * 255 / 60, tm.Second * 255 / 60, 100);
   delay (500);
