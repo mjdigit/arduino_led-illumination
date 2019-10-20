@@ -1,0 +1,533 @@
+{
+	"fileInfo":	{
+		"appName":	"marmelo",
+		"mbdVer":	"2.0.0"
+	},
+	"proj":	{
+		"properties":	{
+			"author":	"Juntaro Minezaki",
+			"title":	"åãç•éÆÇÃìdè¸",
+			"subtitle":	"",
+			"explanation":	"",
+			"read-only":	false
+		},
+		"statistics":	{
+			"numHole":	[12, 18],
+			"numParts":	18,
+			"numWires":	37,
+			"numCmtTags":	1
+		},
+		"options":	{
+			"showBackWiresOnFrontWindow":	true,
+			"showFrontWiresOnBackWindow":	true,
+			"mirrorModeOnBackWindow":	false,
+			"showCmtTags":	true
+		},
+		"parts":	[{
+				"namePMF":	"pinSocket",
+				"namePmodel":	"PS-1x5",
+				"deg":	270,
+				"pos":	[4, 7],
+				"zOrder":	0,
+				"annotation":	0,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"pinSocket",
+				"namePmodel":	"PS-1x5",
+				"deg":	270,
+				"pos":	[4, 12],
+				"zOrder":	1,
+				"annotation":	1,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"pinSocket",
+				"namePmodel":	"PS-1x5",
+				"deg":	270,
+				"pos":	[4, 17],
+				"zOrder":	2,
+				"annotation":	2,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"pinSocket",
+				"namePmodel":	"PS-1x5",
+				"deg":	270,
+				"pos":	[10, 17],
+				"zOrder":	3,
+				"annotation":	3,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"pinSocket",
+				"namePmodel":	"PS-1x5",
+				"deg":	270,
+				"pos":	[10, 12],
+				"zOrder":	4,
+				"annotation":	4,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"pinSocket",
+				"namePmodel":	"PS-1x5",
+				"deg":	270,
+				"pos":	[10, 7],
+				"zOrder":	5,
+				"annotation":	5,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"R",
+				"namePmodel":	"RD-7.62",
+				"deg":	0,
+				"pos":	[5, 12],
+				"zOrder":	6,
+				"annotation":	0,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"R",
+				"namePmodel":	"RD-7.62",
+				"deg":	0,
+				"pos":	[5, 10],
+				"zOrder":	7,
+				"annotation":	1,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"R",
+				"namePmodel":	"RD-7.62",
+				"deg":	0,
+				"pos":	[5, 9],
+				"zOrder":	8,
+				"annotation":	2,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"LED",
+				"namePmodel":	"3mm-Clr",
+				"deg":	0,
+				"pos":	[8, 11],
+				"zOrder":	9,
+				"annotation":	0,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"pinHeader",
+				"namePmodel":	"PH-2x1",
+				"deg":	0,
+				"pos":	[11, 15],
+				"zOrder":	10,
+				"annotation":	0,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"pinHeader",
+				"namePmodel":	"PH-1x4",
+				"deg":	270,
+				"pos":	[11, 11],
+				"zOrder":	11,
+				"annotation":	1,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"SW",
+				"namePmodel":	"DIPSW-4P",
+				"deg":	270,
+				"pos":	[3, 11],
+				"zOrder":	12,
+				"annotation":	0,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"R",
+				"namePmodel":	"RD-7.62",
+				"deg":	0,
+				"pos":	[0, 3],
+				"zOrder":	13,
+				"annotation":	3,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"R",
+				"namePmodel":	"RD-7.62",
+				"deg":	0,
+				"pos":	[0, 4],
+				"zOrder":	14,
+				"annotation":	4,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"R",
+				"namePmodel":	"RD-7.62",
+				"deg":	0,
+				"pos":	[0, 5],
+				"zOrder":	15,
+				"annotation":	5,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"R",
+				"namePmodel":	"RD-7.62",
+				"deg":	0,
+				"pos":	[0, 6],
+				"zOrder":	16,
+				"annotation":	6,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"namePMF":	"pinHeader",
+				"namePmodel":	"PH-1x3",
+				"deg":	0,
+				"pos":	[0, 14],
+				"zOrder":	17,
+				"annotation":	2,
+				"vals":	["", "", ""],
+				"comment":	""
+			}],
+		"wires":	[{
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[11, 14],
+				"pos2":	[10, 14],
+				"color":	"0xFF",
+				"annotation":	0,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[11, 11],
+				"pos2":	[10, 11],
+				"color":	"0xFF",
+				"annotation":	1,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[11, 10],
+				"pos2":	[10, 10],
+				"color":	"0xFF",
+				"annotation":	2,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	true,
+				"pos":	[11, 9],
+				"pos2":	[11, 14],
+				"color":	"0x64FF64",
+				"annotation":	3,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[4, 14],
+				"pos2":	[2, 14],
+				"color":	"0xFF",
+				"annotation":	4,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[5, 12],
+				"pos2":	[4, 12],
+				"color":	"0xFF",
+				"annotation":	5,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[5, 10],
+				"pos2":	[4, 10],
+				"color":	"0xFF",
+				"annotation":	6,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[5, 9],
+				"pos2":	[4, 9],
+				"color":	"0xFF",
+				"annotation":	7,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[4, 6],
+				"pos2":	[3, 6],
+				"color":	"0xFF",
+				"annotation":	8,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[4, 5],
+				"pos2":	[3, 5],
+				"color":	"0xFF",
+				"annotation":	9,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[4, 4],
+				"pos2":	[3, 4],
+				"color":	"0xFF",
+				"annotation":	10,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[4, 3],
+				"pos2":	[3, 3],
+				"color":	"0xFF",
+				"annotation":	11,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[0, 8],
+				"pos2":	[0, 9],
+				"color":	"0xFF",
+				"annotation":	12,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[0, 9],
+				"pos2":	[0, 10],
+				"color":	"0xFF",
+				"annotation":	13,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[0, 10],
+				"pos2":	[0, 11],
+				"color":	"0xFF",
+				"annotation":	14,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[0, 11],
+				"pos2":	[0, 13],
+				"color":	"0xFF",
+				"annotation":	15,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[0, 13],
+				"pos2":	[1, 13],
+				"color":	"0xFF",
+				"annotation":	16,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[1, 13],
+				"pos2":	[1, 14],
+				"color":	"0xFF",
+				"annotation":	17,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[1, 13],
+				"pos2":	[4, 13],
+				"color":	"0xFF",
+				"annotation":	18,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[0, 6],
+				"pos2":	[0, 5],
+				"color":	"0xFF",
+				"annotation":	19,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[0, 3],
+				"pos2":	[0, 2],
+				"color":	"0xFF",
+				"annotation":	20,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[0, 4],
+				"pos2":	[0, 3],
+				"color":	"0xFF",
+				"annotation":	21,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[0, 5],
+				"pos2":	[0, 4],
+				"color":	"0xFF",
+				"annotation":	22,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[0, 2],
+				"pos2":	[11, 2],
+				"color":	"0xFF",
+				"annotation":	23,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[11, 2],
+				"pos2":	[11, 8],
+				"color":	"0xFF",
+				"annotation":	24,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[3, 8],
+				"pos2":	[4, 6],
+				"color":	"0xFF",
+				"annotation":	25,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[0, 14],
+				"pos2":	[0, 15],
+				"color":	"0xFF",
+				"annotation":	26,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	true,
+				"pos":	[0, 15],
+				"pos2":	[10, 14],
+				"color":	"0x64FF64",
+				"annotation":	27,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[11, 15],
+				"pos2":	[10, 16],
+				"color":	"0xFF",
+				"annotation":	28,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[10, 16],
+				"pos2":	[7, 16],
+				"color":	"0xFF",
+				"annotation":	29,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	true,
+				"pos":	[7, 16],
+				"pos2":	[11, 8],
+				"color":	"0x64FF64",
+				"annotation":	30,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[3, 9],
+				"pos2":	[2, 9],
+				"color":	"0xFF",
+				"annotation":	31,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	true,
+				"pos":	[2, 9],
+				"pos2":	[3, 5],
+				"color":	"0x64FF64",
+				"annotation":	32,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[3, 10],
+				"pos2":	[1, 10],
+				"color":	"0xFF",
+				"annotation":	33,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	true,
+				"pos":	[1, 10],
+				"pos2":	[3, 4],
+				"color":	"0x64FF64",
+				"annotation":	34,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	true,
+				"pos":	[3, 11],
+				"pos2":	[6, 3],
+				"color":	"0x64FF64",
+				"annotation":	35,
+				"vals":	["", "", ""],
+				"comment":	""
+			}, {
+				"side":	"back",
+				"shielded":	false,
+				"pos":	[6, 3],
+				"pos2":	[4, 3],
+				"color":	"0xFF",
+				"annotation":	36,
+				"vals":	["", "", ""],
+				"comment":	""
+			}],
+		"cmtTags":	[{
+				"side":	"back",
+				"xyb":	["6.272727", "-1.500000"],
+				"bgColor":	"0xFFFFFF",
+				"chrColor":	"0x0",
+				"annotation":	1,
+				"vals":	["", "", ""],
+				"comment":	"îzê¸ê}ÇÕìKìñ"
+			}]
+	}
+}
