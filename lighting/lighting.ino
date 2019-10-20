@@ -6,6 +6,10 @@
 
 DS3232RTC myRTC(false);
 
+long randRed;
+long randGreen;
+long randBlue;
+
 #define UPDATE_RTC   0
 #define DEBUG_ENABLE 1
 
@@ -89,6 +93,7 @@ void setup() {
   Serial.begin(115200);
   #endif
   myRTC.begin();
+  randomSeed(analogRead(0));
 
   #if UPDATE_RTC
   strncpy (timeStr, __TIME__, 7);
@@ -110,18 +115,29 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
   tmElements_t tm;
-  static int i = 0;
-  int iTo;
+  static struct rgb prevRgb = {0, 0, 0};
+  struct rgb rgbValue;
 
   RTC.read(tm);
   DEBUG ((tm.Hour, DEC));
   DEBUG ((':'));
   DEBUG ((tm.Minute,DEC));
   DEBUG ((':'));
-  DEBUGLN ((tm.Second,DEC));
+  DEBUG ((tm.Second,DEC));
+  DEBUG (("    "));
 
-  iTo = ((i + 1) >= sizeof (rgbValue) / sizeof (rgbValue[0]))? 0: i + 1;
-  fadeLeds (rgbValue[i], rgbValue[iTo], 10, 100);
-  i = iTo;
-  delay (5000);
+  #define MAX_PWM 100
+  rgbValue.red   = random(MAX_PWM);
+  rgbValue.green = random(MAX_PWM);
+  rgbValue.blue  = random(MAX_PWM);
+  DEBUG ((rgbValue.red, DEC));
+  DEBUG ((','));
+  DEBUG ((rgbValue.green, DEC));
+  DEBUG ((','));
+  DEBUGLN ((rgbValue.blue, DEC));
+  fadeLeds (prevRgb, rgbValue, 30, 100);
+  prevRgb.red   = rgbValue.red;
+  prevRgb.green = rgbValue.green;
+  prevRgb.blue  = rgbValue.blue;
+  delay (7000);
 }
