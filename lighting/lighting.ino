@@ -28,6 +28,7 @@ struct rgb {
 };
 
 static struct rgb rgbValue[] = {
+  {0, 0, 0},
   {255, 0, 0},
   {0, 255, 0},
   {0, 0, 255},
@@ -36,6 +37,8 @@ static struct rgb rgbValue[] = {
   {255, 255, 0},
   {255, 255, 255},
 };
+
+/// ################################################################################
 
 static void controlLeds (int redValue, int greenValue, int blueValue, int ratio) {
   redValue = (redValue * ratio) / 100;
@@ -46,6 +49,34 @@ static void controlLeds (int redValue, int greenValue, int blueValue, int ratio)
   analogWrite (analogGreenPin, greenValue);
   analogWrite (analogBluePin, blueValue);
 }
+
+/**
+  Note:
+    steps should be < 100.
+**/
+static void fadeLeds (struct rgb rgbFrom, struct rgb rgbTo, int intervalMs, int steps) {
+  int  s;
+  int  redValue;
+  int  greenValue;
+  int  blueValue;
+
+  if (intervalMs == 0 || steps > 100) {
+    return;
+  }
+
+  for (s = 0; s < steps; s++) {
+    redValue   = (rgbFrom.red   * (steps - s) + rgbTo.red   * s) / steps;
+    greenValue = (rgbFrom.green * (steps - s) + rgbTo.green * s) / steps;
+    blueValue  = (rgbFrom.blue  * (steps - s) + rgbTo.blue  * s) / steps;
+    controlLeds (redValue, greenValue, blueValue, 100);
+
+    delay (intervalMs);
+  }
+  
+  controlLeds (rgbTo.red, rgbTo.green, rgbTo.blue, 100);
+}
+
+/// ################################################################################
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -79,6 +110,8 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
   tmElements_t tm;
+  static int i = 0;
+  int iTo;
 
   RTC.read(tm);
   DEBUG ((tm.Hour, DEC));
@@ -87,6 +120,8 @@ void loop() {
   DEBUG ((':'));
   DEBUGLN ((tm.Second,DEC));
 
-  controlLeds(tm.Hour * 255 / 24, tm.Minute * 255 / 60, tm.Second * 255 / 60, 100);
-  delay (500);
+  iTo = ((i + 1) >= sizeof (rgbValue) / sizeof (rgbValue[0]))? 0: i + 1;
+  fadeLeds (rgbValue[i], rgbValue[iTo], 10, 100);
+  i = iTo;
+  delay (5000);
 }
