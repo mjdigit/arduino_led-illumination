@@ -2,6 +2,39 @@
 #ifndef _LIGHTING_INTERNAL_H_
 #define _LIGHTING_INTERNAL_H_
 
+/// ########################################
+/// flags
+/// ########################################
+/// If enabled setup RTC time on startup.
+#define UPDATE_RTC   0
+
+/// If enabled serial interface and DEBUG() will be enabled.
+#define DEBUG_ENABLE 1
+
+#if DEBUG_ENABLE
+  #define DEBUG(x)   Serial.print x
+  #define DEBUGLN(x) Serial.println x
+#else
+  #define DEBUG(x)
+  #define DEBUGLN(x)
+#endif
+
+/// ########################################
+/// pin assignment
+/// ########################################
+const int analogRedPin   = 3;
+const int analogGreenPin = 5;
+const int analogBluePin  = 6;
+
+/// ########################################
+/// structures/enums
+/// ########################################
+struct rgb {
+  int red;
+  int green;
+  int blue;
+};
+
 enum wdt_delay {
   WDT_DELAY_16MS,
   WDT_DELAY_32MS,

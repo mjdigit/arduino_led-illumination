@@ -12,27 +12,6 @@ long randRed;
 long randGreen;
 long randBlue;
 
-#define UPDATE_RTC   0
-#define DEBUG_ENABLE 1
-
-#if DEBUG_ENABLE
-  #define DEBUG(x)   Serial.print x
-  #define DEBUGLN(x) Serial.println x
-#else
-  #define DEBUG(x)
-  #define DEBUGLN(x)
-#endif
-
-const int analogRedPin   = 3;
-const int analogGreenPin = 5;
-const int analogBluePin  = 6;
-
-struct rgb {
-  int red;
-  int green;
-  int blue;
-};
-
 static struct rgb rgbValue[] = {
   {0, 0, 0},
   {255, 0, 0},
@@ -43,46 +22,6 @@ static struct rgb rgbValue[] = {
   {255, 255, 0},
   {255, 255, 255},
 };
-
-/// ################################################################################
-
-static void controlLeds (int redValue, int greenValue, int blueValue, int ratio) {
-  redValue = (redValue * ratio) / 100;
-  greenValue = (greenValue * ratio) / 100;
-  blueValue = (blueValue * ratio) / 100;
-
-  analogWrite (analogRedPin, redValue);
-  analogWrite (analogGreenPin, greenValue);
-  analogWrite (analogBluePin, blueValue);
-}
-
-/**
-  Note:
-    steps should be < 100.
-**/
-static void fadeLeds (struct rgb rgbFrom, struct rgb rgbTo, int intervalMs, int steps) {
-  int  s;
-  int  redValue;
-  int  greenValue;
-  int  blueValue;
-
-  if (intervalMs == 0 || steps > 100) {
-    return;
-  }
-
-  for (s = 0; s < steps; s++) {
-    redValue   = (rgbFrom.red   * (steps - s) + rgbTo.red   * s) / steps;
-    greenValue = (rgbFrom.green * (steps - s) + rgbTo.green * s) / steps;
-    blueValue  = (rgbFrom.blue  * (steps - s) + rgbTo.blue  * s) / steps;
-    controlLeds (redValue, greenValue, blueValue, 100);
-
-    delay (intervalMs);
-  }
-  
-  controlLeds (rgbTo.red, rgbTo.green, rgbTo.blue, 100);
-}
-
-/// ################################################################################
 
 // the setup function runs once when you press reset or power the board
 void setup() {
