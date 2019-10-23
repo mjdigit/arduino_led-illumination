@@ -2,6 +2,8 @@
 #ifndef _LIGHTING_INTERNAL_H_
 #define _LIGHTING_INTERNAL_H_
 
+#include <DS3232RTC.h>  /// https://github.com/JChristensen/DS3232RTC
+
 /// ########################################
 /// flags
 /// ########################################

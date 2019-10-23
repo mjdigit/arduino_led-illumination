@@ -2,8 +2,6 @@
   Lighting
 */
 
-#include <DS3232RTC.h>  /// https://github.com/JChristensen/DS3232RTC
-
 #include "lighting_internal.h"
 
 DS3232RTC myRTC(false);
@@ -74,22 +72,13 @@ void loop() {
   struct rgb rgbValue;
 
   RTC.read(tm);
-  DEBUG ((tm.Hour, DEC));
-  DEBUG ((':'));
-  DEBUG ((tm.Minute,DEC));
-  DEBUG ((':'));
-  DEBUG ((tm.Second,DEC));
-  DEBUG (("    "));
+  debugPrintTime (tm, false);
 
   #define MAX_PWM 100
   rgbValue.red   = random(MAX_PWM);
   rgbValue.green = random(MAX_PWM);
   rgbValue.blue  = random(MAX_PWM);
-  DEBUG ((rgbValue.red, DEC));
-  DEBUG ((','));
-  DEBUG ((rgbValue.green, DEC));
-  DEBUG ((','));
-  DEBUGLN ((rgbValue.blue, DEC));
+  deugPrintRgb (rgbValue, true);
   fadeLeds (prevRgb, rgbValue, 30, 100);
   prevRgb.red   = rgbValue.red;
   prevRgb.green = rgbValue.green;
