@@ -139,5 +139,5 @@ void loop() {
   prevRgb.red   = rgbValue.red;
   prevRgb.green = rgbValue.green;
   prevRgb.blue  = rgbValue.blue;
-  delay (7000);
+  delayIdle (7000);
 }
