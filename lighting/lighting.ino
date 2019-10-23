@@ -4,6 +4,8 @@
 
 #include <DS3232RTC.h>  /// https://github.com/JChristensen/DS3232RTC
 
+#include "lighting_internal.h"
+
 DS3232RTC myRTC(false);
 
 long randRed;
@@ -110,6 +112,20 @@ void setup() {
     RTC.write (tm);
   }
   #endif
+
+  // test
+  {
+    tmElements_t tm;
+    RTC.read(tm);
+
+    while (tm.Minute % 3 != 0) {
+      controlLeds (32, 0, 0, 100);
+      delay (50);
+      controlLeds (0, 0, 0, 100);
+      delayWDT (WDT_DELAY_8S);
+      RTC.read(tm);
+    }
+  }
 }
 
 // the loop function runs over and over again forever
