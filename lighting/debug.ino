@@ -1,6 +1,12 @@
 #include "lighting_internal.h"
 
 void debugPrintTime (tmElements_t tm, boolean linebreak) {
+  DEBUG ((tmYearToCalendar (tm.Year)));
+  DEBUG (("/"));
+  DEBUG ((tm.Month));
+  DEBUG (("/"));
+  DEBUG ((tm.Day));
+  DEBUG ((" "));
   DEBUG ((tm.Hour, DEC));
   DEBUG ((':'));
   DEBUG ((tm.Minute,DEC));

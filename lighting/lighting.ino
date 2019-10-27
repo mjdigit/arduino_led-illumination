@@ -19,13 +19,39 @@ static struct rgb rgbValue[] = {
   {255, 255, 255},
 };
 
+bool setupTm (const char *DateStr, const char *TimeStr, tmElements_t *tm) {
+  #define NUM_MONTH 12
+  int Year, Month, Day, Hour, Min, Sec;
+  char MonthStr[12];
+  const char *MonthTable[NUM_MONTH] = {
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" 
+  };
+
+  if (sscanf (DateStr, "%s %d %d", MonthStr, &Day, &Year) != 3) return false;
+  if (sscanf (TimeStr, "%d:%d:%d", &Hour, &Min, &Sec) != 3) return false;
+
+  for (Month = 0; Month < NUM_MONTH; Month++) {
+    if (strcmp (MonthStr, MonthTable[Month]) == 0) break;
+  }
+  if (Month >= NUM_MONTH) return false;
+
+  tm->Year = CalendarYrToTm(Year);
+  tm->Month = Month + 1;
+  tm->Day = Day;
+  tm->Hour = Hour;
+  tm->Minute = Min;
+  tm->Second = Sec;
+
+  return true;
+}
+
+
 // the setup function runs once when you press reset or power the board
 void setup() {
   #if UPDATE_RTC
-  char timeStr[9] = {0};
-  char *hp, *mp, *sp;
+  tmElements_t tm;
   #endif
-
   #if DEBUG_ENABLE
   Serial.begin(115200);
   #endif
@@ -33,18 +59,14 @@ void setup() {
   randomSeed(analogRead(0));
 
   #if UPDATE_RTC
-  strncpy (timeStr, __TIME__, 7);
-  Serial.print ("Update RTC: ");
-  Serial.println(timeStr);
-  hp = strtok (timeStr, ":");
-  mp = strtok (NULL, ":");
-  sp = strtok (NULL, ":");
-  if (hp != NULL && mp != NULL && sp != NULL) {
-    tmElements_t tm;
-    tm.Hour   = atoi (hp);
-    tm.Minute = atoi (mp);
-    tm.Second = atoi (sp);
+  DEBUG (("Update RTC: "));
+  DEBUG ((__DATE__));
+  DEBUG ((" "));
+  DEBUGLN ((__TIME__));
+  if (setupTm (__DATE__, __TIME__, &tm)) {
     RTC.write (tm);
+    DEBUG (("RTC updated: "));
+    debugPrintTime (tm, true);
   }
   #endif
 
