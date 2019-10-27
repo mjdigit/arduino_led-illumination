@@ -76,12 +76,17 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
   tmElements_t tm;
+  static int Minute = 0;
 
   RTC.read(tm);
-  debugPrintTime (tm, true);
+  if (tm.Minute != Minute) {
+    debugPrintTime (tm, true);
+    Minute = tm.Minute;
+  }
 
   if (sceneFunc != NULL) sceneFunc (tm);
 
-  if ((tm.Minute + 0) % 10 == 0) sceneFunc = sceneIdle;
-  if ((tm.Minute + 5) % 10 == 0) sceneFunc = sceneRandomFade; 
+  if ((tm.Minute + 0) % 6 == 0) sceneFunc = sceneIdle;
+  if ((tm.Minute + 2) % 6 == 0) sceneFunc = sceneRandomFade;
+  if ((tm.Minute + 4) % 6 == 0) sceneFunc = sceneCandle; 
 }

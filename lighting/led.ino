@@ -1,21 +1,25 @@
 
 #include "lighting_internal.h"
 
-static void controlLeds (int redValue, int greenValue, int blueValue, int ratio) {
+bool controlLeds (int redValue, int greenValue, int blueValue, int ratio) {
   redValue = (redValue * ratio) / 100;
   greenValue = (greenValue * ratio) / 100;
   blueValue = (blueValue * ratio) / 100;
 
+  if (redValue > 255 || greenValue > 255 || blueValue > 255) return false;
+
   analogWrite (analogRedPin, redValue);
   analogWrite (analogGreenPin, greenValue);
   analogWrite (analogBluePin, blueValue);
+
+  return true;
 }
 
 /**
   Note:
     steps should be < 100.
 **/
-static void fadeLeds (struct rgb rgbFrom, struct rgb rgbTo, int intervalMs, int steps) {
+void fadeLeds (struct rgb rgbFrom, struct rgb rgbTo, int intervalMs, int steps) {
   int  s;
   int  redValue;
   int  greenValue;

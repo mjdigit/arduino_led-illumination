@@ -25,3 +25,12 @@ void sceneRandomFade (tmElements_t tm) {
   prevRgb.blue  = rgbValue.blue;
   delayIdle (7000);
 }
+
+void sceneCandle (tmElements_t tm) {
+  struct rgb baseRgb = {100, 40, 5};
+  int rate = 50 + random(20);
+
+  controlLeds (baseRgb.red, baseRgb.green, baseRgb.blue, rate);
+
+  delayIdle (50);
+}
