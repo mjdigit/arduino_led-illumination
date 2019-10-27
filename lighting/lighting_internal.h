@@ -31,6 +31,9 @@ const int analogBluePin  = 6;
 /// ########################################
 /// structures/enums
 /// ########################################
+
+typedef void (*SCENE_FUNC) (tmElements_t tm);
+
 struct rgb {
   int red;
   int green;

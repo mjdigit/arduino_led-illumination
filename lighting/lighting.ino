@@ -6,9 +6,7 @@
 
 DS3232RTC myRTC(false);
 
-long randRed;
-long randGreen;
-long randBlue;
+SCENE_FUNC sceneFunc = NULL;
 
 static struct rgb rgbValue[] = {
   {0, 0, 0},
@@ -50,38 +48,18 @@ void setup() {
   }
   #endif
 
-  // test
-  {
-    tmElements_t tm;
-    RTC.read(tm);
-
-    while (tm.Minute % 3 != 0) {
-      controlLeds (32, 0, 0, 100);
-      delay (50);
-      controlLeds (0, 0, 0, 100);
-      delayWDT (WDT_DELAY_8S);
-      RTC.read(tm);
-    }
-  }
+  sceneFunc = sceneIdle;
 }
 
 // the loop function runs over and over again forever
 void loop() {
   tmElements_t tm;
-  static struct rgb prevRgb = {0, 0, 0};
-  struct rgb rgbValue;
 
   RTC.read(tm);
-  debugPrintTime (tm, false);
+  debugPrintTime (tm, true);
 
-  #define MAX_PWM 100
-  rgbValue.red   = random(MAX_PWM);
-  rgbValue.green = random(MAX_PWM);
-  rgbValue.blue  = random(MAX_PWM);
-  deugPrintRgb (rgbValue, true);
-  fadeLeds (prevRgb, rgbValue, 30, 100);
-  prevRgb.red   = rgbValue.red;
-  prevRgb.green = rgbValue.green;
-  prevRgb.blue  = rgbValue.blue;
-  delayIdle (7000);
+  if (sceneFunc != NULL) sceneFunc (tm);
+
+  if ((tm.Minute + 0) % 10 == 0) sceneFunc = sceneIdle;
+  if ((tm.Minute + 5) % 10 == 0) sceneFunc = sceneRandomFade; 
 }
