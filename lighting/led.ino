@@ -35,7 +35,7 @@ void fadeLeds (struct rgb rgbFrom, struct rgb rgbTo, int intervalMs, int steps) 
     blueValue  = (rgbFrom.blue  * (steps - s) + rgbTo.blue  * s) / steps;
     controlLeds (redValue, greenValue, blueValue, 100);
 
-    delay (intervalMs);
+    delayIdle (intervalMs);
   }
   
   controlLeds (rgbTo.red, rgbTo.green, rgbTo.blue, 100);

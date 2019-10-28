@@ -3,6 +3,8 @@ long randRed;
 long randGreen;
 long randBlue;
 
+#define TIME_VALUE(tm)  (3600*(tm).Hour + 60*(tm).Minute + (tm).Second)
+
 /**
   Hour, Minute, Second will be overwritten.
 **/
@@ -27,17 +29,13 @@ SCENE_TABLE_ELEMENT* getSceneElement (
   int i;
   tmElements_t startTm;
   tmElements_t endTm;
-  int startTimeValue, currentTimeValue, endTimeValue;
 
   for (i = 0; i < elements; i++) {
     convertTimeToTm (table[i].startTimeStr, &startTm);
     convertTimeToTm (table[i].endTimeStr, &endTm);
 
-    startTimeValue   = 3600 * startTm.Hour + 60 * startTm.Minute + startTm.Second;
-    currentTimeValue = 3600 * tm.Hour      + 60 * tm.Minute      + tm.Second;
-    endTimeValue     = 3600 * endTm.Hour   + 60 * endTm.Minute   + endTm.Second;
-
-    if (startTimeValue <= currentTimeValue && currentTimeValue <= endTimeValue) {
+    if (TIME_VALUE (startTm) <= TIME_VALUE (tm) &&
+        TIME_VALUE (tm) <= TIME_VALUE (endTm)) {
       return &table[i];
     }
   }
