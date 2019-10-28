@@ -19,11 +19,15 @@ void setup() {
   #if UPDATE_RTC
   tmElements_t tm;
   #endif
-  #if DEBUG_ENABLE
-  Serial.begin(115200);
-  #endif
+  
   myRTC.begin();
   randomSeed(analogRead(0));
+  #if DEBUG_ENABLE
+  Serial.begin(115200);
+  DEBUG (("RTC temp: "));
+  DEBUG (((float) RTC.temperature() / 4.0));
+  DEBUGLN (("[C]"));
+  #endif
 
   #if UPDATE_RTC
   DEBUG (("Update RTC: "));
