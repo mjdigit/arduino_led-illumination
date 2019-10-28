@@ -34,6 +34,12 @@ const int analogBluePin  = 6;
 
 typedef void (*SCENE_FUNC) (tmElements_t tm);
 
+typedef struct {
+  char        *startTimeStr; // "hh:mm:ss"
+  char        *endTimeStr;   // "hh:mm:ss"
+  SCENE_FUNC  sceneFunc;
+} SCENE_TABLE_ELEMENT;
+
 struct rgb {
   int red;
   int green;
@@ -53,5 +59,13 @@ enum wdt_delay {
   WDT_DELAY_8S,
   WDT_DELAY_UNKNOWN
 };
+
+/// ########################################
+/// function declaration
+/// ########################################
+
+void sceneIdle (tmElements_t tm);
+void sceneRandomFade (tmElements_t tm);
+void sceneCandle (tmElements_t tm);
 
 #endif /*_LIGHTING_INTERNAL_H_*/

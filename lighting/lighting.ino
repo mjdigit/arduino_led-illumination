@@ -6,46 +6,13 @@
 
 DS3232RTC myRTC(false);
 
-SCENE_FUNC sceneFunc = NULL;
-
-static struct rgb rgbValue[] = {
-  {0, 0, 0},
-  {255, 0, 0},
-  {0, 255, 0},
-  {0, 0, 255},
-  {0, 255, 255},
-  {255, 0, 255},
-  {255, 255, 0},
-  {255, 255, 255},
+SCENE_TABLE_ELEMENT defaultSceneElement = {"00:00:00", "00:00:00", sceneIdle};
+SCENE_TABLE_ELEMENT sceneTable[] = {
+  {"00:00:00", "02:00:00", sceneCandle},
+  {"07:00:00", "09:00:00", sceneRandomFade},
+  {"18:00:00", "22:00:00", sceneRandomFade},
+  {"22:00:00", "23:59:59", sceneCandle},
 };
-
-bool setupTm (const char *DateStr, const char *TimeStr, tmElements_t *tm) {
-  #define NUM_MONTH 12
-  int Year, Month, Day, Hour, Min, Sec;
-  char MonthStr[12];
-  const char *MonthTable[NUM_MONTH] = {
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" 
-  };
-
-  if (sscanf (DateStr, "%s %d %d", MonthStr, &Day, &Year) != 3) return false;
-  if (sscanf (TimeStr, "%d:%d:%d", &Hour, &Min, &Sec) != 3) return false;
-
-  for (Month = 0; Month < NUM_MONTH; Month++) {
-    if (strcmp (MonthStr, MonthTable[Month]) == 0) break;
-  }
-  if (Month >= NUM_MONTH) return false;
-
-  tm->Year = CalendarYrToTm(Year);
-  tm->Month = Month + 1;
-  tm->Day = Day;
-  tm->Hour = Hour;
-  tm->Minute = Min;
-  tm->Second = Sec;
-
-  return true;
-}
-
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -69,14 +36,13 @@ void setup() {
     debugPrintTime (tm, true);
   }
   #endif
-
-  sceneFunc = sceneIdle;
 }
 
 // the loop function runs over and over again forever
 void loop() {
   tmElements_t tm;
   static int Minute = 0;
+  SCENE_TABLE_ELEMENT *sceneElement;
 
   RTC.read(tm);
   if (tm.Minute != Minute) {
@@ -84,9 +50,14 @@ void loop() {
     Minute = tm.Minute;
   }
 
-  if (sceneFunc != NULL) sceneFunc (tm);
+  sceneElement = getSceneElement (
+                   sceneTable,
+                   sizeof (sceneTable) / sizeof (sceneTable[0]),
+                   tm
+                   );
+  if (sceneElement == NULL) {
+    sceneElement = &defaultSceneElement;
+  }
 
-  if ((tm.Minute + 0) % 6 == 0) sceneFunc = sceneIdle;
-  if ((tm.Minute + 2) % 6 == 0) sceneFunc = sceneRandomFade;
-  if ((tm.Minute + 4) % 6 == 0) sceneFunc = sceneCandle; 
+  sceneElement->sceneFunc (tm);
 }
