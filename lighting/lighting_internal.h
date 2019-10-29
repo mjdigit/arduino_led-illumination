@@ -32,13 +32,14 @@ const int analogBluePin  = 6;
 /// structures/enums
 /// ########################################
 
-typedef void (*SCENE_FUNC) (tmElements_t tm);
+typedef struct _SCENE_TABLE_ELEMENT SCENE_TABLE_ELEMENT;
+typedef void (*SCENE_FUNC) (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
 
-typedef struct {
+struct _SCENE_TABLE_ELEMENT {
   char        *startTimeStr; // "hh:mm:ss"
   char        *endTimeStr;   // "hh:mm:ss"
   SCENE_FUNC  sceneFunc;
-} SCENE_TABLE_ELEMENT;
+};
 
 struct rgb {
   int red;
@@ -65,10 +66,11 @@ enum wdt_delay {
 /// ########################################
 extern struct rgb gCurrentRgb;
 
-void sceneIdle (tmElements_t tm);
-void sceneMorning (tmElements_t tm);
-void sceneNight (tmElements_t tm);
-void sceneRandomFade (tmElements_t tm);
-void sceneCandle (tmElements_t tm);
+void sceneIdle (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
+void sceneFadeToNight (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
+void sceneMorning (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
+void sceneNight (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
+void sceneRandomFade (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
+void sceneCandle (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
 
 #endif /*_LIGHTING_INTERNAL_H_*/

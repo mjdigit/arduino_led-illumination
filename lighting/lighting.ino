@@ -9,7 +9,8 @@ struct rgb gCurrentRgb = {0, 0, 0};
 
 SCENE_TABLE_ELEMENT defaultSceneElement = {"00:00:00", "00:00:00", sceneIdle};
 SCENE_TABLE_ELEMENT sceneTable[] = {
-  {"00:00:00", "01:00:00", sceneNight},
+  {"00:00:00", "00:00:02", sceneFadeToNight},
+  {"00:00:02", "01:00:00", sceneNight},
   {"01:00:00", "02:00:00", sceneCandle},
   {"06:00:00", "07:00:00", sceneMorning},
   {"07:00:00", "09:00:00", sceneRandomFade},
@@ -66,5 +67,5 @@ void loop() {
     sceneElement = &defaultSceneElement;
   }
 
-  sceneElement->sceneFunc (tm);
+  sceneElement->sceneFunc (sceneElement, tm);
 }
