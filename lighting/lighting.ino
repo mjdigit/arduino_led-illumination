@@ -5,10 +5,13 @@
 #include "lighting_internal.h"
 
 DS3232RTC myRTC(false);
+struct rgb gCurrentRgb = {0, 0, 0};
 
 SCENE_TABLE_ELEMENT defaultSceneElement = {"00:00:00", "00:00:00", sceneIdle};
 SCENE_TABLE_ELEMENT sceneTable[] = {
-  {"00:00:00", "02:00:00", sceneCandle},
+  {"00:00:00", "01:00:00", sceneNight},
+  {"01:00:00", "02:00:00", sceneCandle},
+  {"06:00:00", "07:00:00", sceneMorning},
   {"07:00:00", "09:00:00", sceneRandomFade},
   {"18:00:00", "22:00:00", sceneRandomFade},
   {"22:00:00", "23:59:59", sceneCandle},

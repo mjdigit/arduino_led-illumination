@@ -63,8 +63,11 @@ enum wdt_delay {
 /// ########################################
 /// function declaration
 /// ########################################
+extern struct rgb gCurrentRgb;
 
 void sceneIdle (tmElements_t tm);
+void sceneMorning (tmElements_t tm);
+void sceneNight (tmElements_t tm);
 void sceneRandomFade (tmElements_t tm);
 void sceneCandle (tmElements_t tm);
 

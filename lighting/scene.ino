@@ -5,6 +5,9 @@ long randBlue;
 
 #define TIME_VALUE(tm)  (3600*(tm).Hour + 60*(tm).Minute + (tm).Second)
 
+struct rgb mColorNight   = {15, 5, 30};
+struct rgb mColorMorning = {128, 96, 64};
+
 /**
   Hour, Minute, Second will be overwritten.
 **/
@@ -48,6 +51,18 @@ void sceneIdle (tmElements_t tm) {
   delay (50);
   controlLeds (0, 0, 0, 100);
   delayWDT (WDT_DELAY_8S);
+}
+
+void sceneNight (tmElements_t tm) {
+  controlLeds (mColorNight.red, mColorNight.green, mColorNight.blue, 100);
+  // TODO:
+  delayIdle (10000);
+}
+
+void sceneMorning (tmElements_t tm) {
+  controlLeds (mColorMorning.red, mColorMorning.green, mColorMorning.blue, 100);
+  // TODO:
+  delayIdle (10000);
 }
 
 void sceneRandomFade (tmElements_t tm) {
