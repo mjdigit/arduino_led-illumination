@@ -6,7 +6,7 @@
 
 DS3232RTC myRTC(false);
 struct rgb gCurrentRgb = {0, 0, 0};
-long mTimeAdjust = 0;
+long gTimeAdjust = 0;
 
 #define  START_TIME_STR  "12:00:00"
 SCENE_TABLE_ELEMENT defaultSceneElement = {"00:00:00", "00:00:00", sceneIdle};
@@ -51,7 +51,8 @@ void setup() {
 
   RTC.read(tm);
   convertTimeToTm (START_TIME_STR, &startTm);
-  mTimeAdjust = TIME_VALUE(startTm) - TIME_VALUE(tm);
+  gTimeAdjust = TIME_VALUE(startTm) - TIME_VALUE(tm);
+  DEBUGLN ((gTimeAdjust));
 }
 
 // the loop function runs over and over again forever
@@ -69,7 +70,7 @@ void loop() {
   sceneElement = getSceneElement (
                    sceneTable,
                    sizeof (sceneTable) / sizeof (sceneTable[0]),
-                   tm, mTimeAdjust
+                   tm
                    );
   if (sceneElement == NULL) {
     sceneElement = &defaultSceneElement;

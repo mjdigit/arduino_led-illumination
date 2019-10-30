@@ -11,21 +11,20 @@ struct rgb mColorMorning = {128, 96, 64};
 SCENE_TABLE_ELEMENT* getSceneElement (
   SCENE_TABLE_ELEMENT *table,
   int elements,
-  tmElements_t tm,
-  long timeAdjust
+  tmElements_t tm
   )
 {
+  long currentTimeValue;
   int i;
   tmElements_t startTm;
   tmElements_t endTm;
-  long currentTimeValue;
 
+  currentTimeValue = ADJUSTED_TIME_VALUE (TIME_VALUE (tm), gTimeAdjust);
+  //DEBUGLN ((currentTimeValue));
   for (i = 0; i < elements; i++) {
     convertTimeToTm (table[i].startTimeStr, &startTm);
     convertTimeToTm (table[i].endTimeStr, &endTm);
 
-    currentTimeValue = TIME_VALUE (tm) + timeAdjust;
-    if (currentTimeValue < 0) currentTimeValue += 24l * 3600;
     if (TIME_VALUE (startTm) <= currentTimeValue &&
         currentTimeValue <= TIME_VALUE (endTm)) {
       return &table[i];
@@ -74,18 +73,28 @@ void sceneMorning (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
 }
 
 void sceneRandomFade (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
-  static struct rgb prevRgb = {0, 0, 0};
+  tmElements_t endTm;
+  long currentTimeValue, endTimeValue;
   struct rgb rgbValue;
+
+  int intervalMs;
+
+  convertTimeToTm (sceneElement->endTimeStr, &endTm);
+  currentTimeValue = ADJUSTED_TIME_VALUE (TIME_VALUE (tm), gTimeAdjust);
+  endTimeValue = TIME_VALUE (endTm);
+  if (endTimeValue > currentTimeValue &&
+      (endTimeValue - currentTimeValue) * 1000 < DEFAULT_INTERVAL + 30 * 100) {
+    delayIdle ((endTimeValue - currentTimeValue) * 1000);
+    return;
+  }
 
   #define MAX_PWM 100
   rgbValue.red   = random(MAX_PWM);
   rgbValue.green = random(MAX_PWM);
   rgbValue.blue  = random(MAX_PWM);
   debugPrintRgb (rgbValue, true);
-  fadeLeds (prevRgb, rgbValue, 30, 100);
-  prevRgb.red   = rgbValue.red;
-  prevRgb.green = rgbValue.green;
-  prevRgb.blue  = rgbValue.blue;
+  fadeLeds (gCurrentRgb, rgbValue, 30, 100);
+
   delayIdle (DEFAULT_INTERVAL);
 }
 
