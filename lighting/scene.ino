@@ -3,7 +3,7 @@ long randRed;
 long randGreen;
 long randBlue;
 
-#define TIME_VALUE(tm)   (3600*(tm).Hour + 60*(tm).Minute + (tm).Second)
+#define TIME_VALUE(tm)   ((long) 3600*(tm).Hour + 60*(tm).Minute + (tm).Second)
 #define DEFAULT_INTERVAL (10000)
 
 struct rgb mColorNight   = {15, 5, 30};
