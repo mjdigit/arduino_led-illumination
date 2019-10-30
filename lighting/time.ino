@@ -25,3 +25,19 @@ bool setupTm (const char *DateStr, const char *TimeStr, tmElements_t *tm) {
 
   return true;
 }
+
+
+/**
+  Hour, Minute, Second will be overwritten.
+**/
+bool convertTimeToTm (char *TimeStr, tmElements_t *tm) {
+  int Hour, Min, Sec;
+
+  if (sscanf (TimeStr, "%d:%d:%d", &Hour, &Min, &Sec) != 3) return false;
+
+  tm->Hour = Hour;
+  tm->Minute = Min;
+  tm->Second = Sec;
+
+  return true;
+}

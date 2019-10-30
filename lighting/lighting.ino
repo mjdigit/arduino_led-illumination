@@ -6,28 +6,27 @@
 
 DS3232RTC myRTC(false);
 struct rgb gCurrentRgb = {0, 0, 0};
+long mTimeAdjust = 0;
 
+#define  START_TIME_STR  "12:00:00"
 SCENE_TABLE_ELEMENT defaultSceneElement = {"00:00:00", "00:00:00", sceneIdle};
 SCENE_TABLE_ELEMENT sceneTable[] = {
-  {"00:00:00", "00:00:02", sceneFadeToNight},
-  {"00:00:02", "01:00:00", sceneNight},
-  {"01:00:00", "02:00:00", sceneCandle},
-  {"06:00:00", "07:00:00", sceneMorning},
-  {"07:00:00", "09:00:00", sceneRandomFade},
-  {"18:00:00", "22:00:00", sceneRandomFade},
-  {"22:00:00", "22:00:02", sceneFadeToNight},
-  {"22:00:02", "22:20:00", sceneNight},
-  {"22:20:00", "22:25:00", sceneFadeToMorning},
-  {"22:25:00", "22:35:00", sceneMorning},
-  {"22:35:00", "22:40:00", sceneFadeToNight},
-  {"22:40:00", "23:59:59", sceneCandle},
+  {"12:01:00", "12:02:00", sceneRandomFade},
+  {"12:02:00", "12:02:02", sceneFadeToNight},
+  {"12:02:00", "12:03:00", sceneNight},
+  {"12:03:00", "12:04:00", sceneFadeToMorning},
+  {"12:04:00", "12:05:00", sceneMorning},
+  {"12:05:00", "12:06:00", sceneFadeToNight},
+  {"12:06:00", "12:07:00", sceneNight},
+  {"12:07:00", "12:08:00", sceneCandle},
+  {"12:08:00", "12:08:02", sceneFadeToNight},
+  {"12:08:00", "12:09:00", sceneNight},
 };
 
 // the setup function runs once when you press reset or power the board
 void setup() {
-  #if UPDATE_RTC
   tmElements_t tm;
-  #endif
+  tmElements_t startTm;
   
   myRTC.begin();
   randomSeed(analogRead(0));
@@ -49,6 +48,10 @@ void setup() {
     debugPrintTime (tm, true);
   }
   #endif
+
+  RTC.read(tm);
+  convertTimeToTm (START_TIME_STR, &startTm);
+  mTimeAdjust = TIME_VALUE(startTm) - TIME_VALUE(tm);
 }
 
 // the loop function runs over and over again forever
@@ -66,7 +69,7 @@ void loop() {
   sceneElement = getSceneElement (
                    sceneTable,
                    sizeof (sceneTable) / sizeof (sceneTable[0]),
-                   tm
+                   tm, mTimeAdjust
                    );
   if (sceneElement == NULL) {
     sceneElement = &defaultSceneElement;

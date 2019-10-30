@@ -66,6 +66,8 @@ enum wdt_delay {
 /// ########################################
 extern struct rgb gCurrentRgb;
 
+#define TIME_VALUE(tm)   ((long) 3600*(tm).Hour + 60*(tm).Minute + (tm).Second)
+
 void sceneIdle (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
 void sceneFadeToMorning (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
 void sceneFadeToNight (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);

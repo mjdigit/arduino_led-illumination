@@ -3,43 +3,31 @@ long randRed;
 long randGreen;
 long randBlue;
 
-#define TIME_VALUE(tm)   ((long) 3600*(tm).Hour + 60*(tm).Minute + (tm).Second)
 #define DEFAULT_INTERVAL (10000)
 
 struct rgb mColorNight   = {15, 5, 30};
 struct rgb mColorMorning = {128, 96, 64};
 
-/**
-  Hour, Minute, Second will be overwritten.
-**/
-bool convertTimeToTm (char *TimeStr, tmElements_t *tm) {
-  int Hour, Min, Sec;
-
-  if (sscanf (TimeStr, "%d:%d:%d", &Hour, &Min, &Sec) != 3) return false;
-
-  tm->Hour = Hour;
-  tm->Minute = Min;
-  tm->Second = Sec;
-
-  return true;
-}
-
 SCENE_TABLE_ELEMENT* getSceneElement (
   SCENE_TABLE_ELEMENT *table,
   int elements,
-  tmElements_t tm
+  tmElements_t tm,
+  long timeAdjust
   )
 {
   int i;
   tmElements_t startTm;
   tmElements_t endTm;
+  long currentTimeValue;
 
   for (i = 0; i < elements; i++) {
     convertTimeToTm (table[i].startTimeStr, &startTm);
     convertTimeToTm (table[i].endTimeStr, &endTm);
 
-    if (TIME_VALUE (startTm) <= TIME_VALUE (tm) &&
-        TIME_VALUE (tm) <= TIME_VALUE (endTm)) {
+    currentTimeValue = TIME_VALUE (tm) + timeAdjust;
+    if (currentTimeValue < 0) currentTimeValue += 24l * 3600;
+    if (TIME_VALUE (startTm) <= currentTimeValue &&
+        currentTimeValue <= TIME_VALUE (endTm)) {
       return &table[i];
     }
   }
