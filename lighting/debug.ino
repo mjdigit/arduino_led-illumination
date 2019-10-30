@@ -17,7 +17,7 @@ void debugPrintTime (tmElements_t tm, boolean linebreak) {
   }
 }
 
-void deugPrintRgb (struct rgb rgbValue, boolean linebreak) {
+void debugPrintRgb (struct rgb rgbValue, boolean linebreak) {
   DEBUG (('('));
   DEBUG ((rgbValue.red, DEC));
   DEBUG ((','));

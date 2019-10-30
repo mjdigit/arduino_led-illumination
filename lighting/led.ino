@@ -12,7 +12,9 @@ bool controlLeds (int redValue, int greenValue, int blueValue, int ratio) {
   analogWrite (analogGreenPin, greenValue);
   analogWrite (analogBluePin, blueValue);
 
+
   gCurrentRgb = {redValue, greenValue, blueValue};
+  //debugPrintRgb (gCurrentRgb, true);
 
   return true;
 }

@@ -55,16 +55,24 @@ void sceneIdle (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
   delayWDT (WDT_DELAY_8S);
 }
 
-void sceneFadeToNight (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
+static void fadeTo (char *startTimeStr, char *endTimeStr, struct rgb rgbTo) {
   tmElements_t startTm;
   tmElements_t endTm;
   int intervalMs;
 
-  convertTimeToTm (sceneElement->startTimeStr, &startTm);
-  convertTimeToTm (sceneElement->endTimeStr, &endTm);
+  convertTimeToTm (startTimeStr, &startTm);
+  convertTimeToTm (endTimeStr, &endTm);
   intervalMs = 10 * (TIME_VALUE (endTm) - TIME_VALUE (startTm));
   
-  fadeLeds (gCurrentRgb, mColorNight, intervalMs, 100);
+  fadeLeds (gCurrentRgb, rgbTo, intervalMs, 100);
+}
+
+void sceneFadeToMorning (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
+  fadeTo (sceneElement->startTimeStr, sceneElement->endTimeStr, mColorMorning);
+}
+
+void sceneFadeToNight (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
+  fadeTo (sceneElement->startTimeStr, sceneElement->endTimeStr, mColorNight);
 }
 
 void sceneNight (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
@@ -85,7 +93,7 @@ void sceneRandomFade (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
   rgbValue.red   = random(MAX_PWM);
   rgbValue.green = random(MAX_PWM);
   rgbValue.blue  = random(MAX_PWM);
-  deugPrintRgb (rgbValue, true);
+  debugPrintRgb (rgbValue, true);
   fadeLeds (prevRgb, rgbValue, 30, 100);
   prevRgb.red   = rgbValue.red;
   prevRgb.green = rgbValue.green;

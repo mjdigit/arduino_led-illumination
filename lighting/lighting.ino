@@ -15,7 +15,12 @@ SCENE_TABLE_ELEMENT sceneTable[] = {
   {"06:00:00", "07:00:00", sceneMorning},
   {"07:00:00", "09:00:00", sceneRandomFade},
   {"18:00:00", "22:00:00", sceneRandomFade},
-  {"22:00:00", "23:59:59", sceneCandle},
+  {"22:00:00", "22:00:02", sceneFadeToNight},
+  {"22:00:02", "22:20:00", sceneNight},
+  {"22:20:00", "22:25:00", sceneFadeToMorning},
+  {"22:25:00", "22:35:00", sceneMorning},
+  {"22:35:00", "22:40:00", sceneFadeToNight},
+  {"22:40:00", "23:59:59", sceneCandle},
 };
 
 // the setup function runs once when you press reset or power the board
