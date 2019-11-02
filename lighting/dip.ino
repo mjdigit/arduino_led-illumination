@@ -1,4 +1,7 @@
+#include <EEPROM.h>
 #include "lighting_internal.h"
+
+#define EEPROM_MODE_ADDRESS 0
 
 void initializeDipPins () {
   pinMode (setModePin, INPUT);
@@ -21,4 +24,12 @@ int getModePin () {
   mode |= ((digitalRead (modePin4) == HIGH)? 1: 0) << 0;
 
   return mode;
+}
+
+int getCurrentMode () {
+  return EEPROM.read (EEPROM_MODE_ADDRESS);
+}
+
+void setMode (int mode) {
+  EEPROM.write (EEPROM_MODE_ADDRESS, mode);
 }
