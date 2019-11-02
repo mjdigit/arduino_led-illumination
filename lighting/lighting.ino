@@ -12,14 +12,14 @@ long gTimeAdjust = 0;
 SCENE_TABLE_ELEMENT defaultSceneElement = {"00:00:00", "00:00:00", sceneIdle};
 SCENE_TABLE_ELEMENT sceneTable[] = {
   {"12:01:00", "12:02:00", sceneRandomFade},
-  {"12:02:00", "12:02:02", sceneFadeToNight},
+  {"12:02:00", "12:02:05", sceneFadeToNight},
   {"12:02:00", "12:03:00", sceneNight},
   {"12:03:00", "12:04:00", sceneFadeToMorning},
   {"12:04:00", "12:05:00", sceneMorning},
   {"12:05:00", "12:06:00", sceneFadeToNight},
   {"12:06:00", "12:07:00", sceneNight},
   {"12:07:00", "12:08:00", sceneCandle},
-  {"12:08:00", "12:08:02", sceneFadeToNight},
+  {"12:08:00", "12:08:05", sceneFadeToNight},
   {"12:08:00", "12:09:00", sceneNight},
 };
 
@@ -27,7 +27,10 @@ SCENE_TABLE_ELEMENT sceneTable[] = {
 void setup() {
   tmElements_t tm;
   tmElements_t startTm;
-  
+  int mode;
+
+  initializeDipPins ();
+
   myRTC.begin();
   randomSeed(analogRead(0));
   #if DEBUG_ENABLE
@@ -53,6 +56,12 @@ void setup() {
   convertTimeToTm (START_TIME_STR, &startTm);
   gTimeAdjust = TIME_VALUE(startTm) - TIME_VALUE(tm);
   DEBUGLN ((gTimeAdjust));
+
+  if (isSetMode ()) {
+    mode = getModePin ();
+    DEBUG (("Setup Mode to: "));
+    DEBUGLN ((mode));
+  }
 }
 
 // the loop function runs over and over again forever

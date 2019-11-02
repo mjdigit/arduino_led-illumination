@@ -28,6 +28,12 @@ const int analogRedPin   = 3;
 const int analogGreenPin = 5;
 const int analogBluePin  = 6;
 
+const int setModePin     = 2;
+const int modePin1       = 12;
+const int modePin2       = 11;
+const int modePin3       = 10;
+const int modePin4       = 9;
+
 /// ########################################
 /// structures/enums
 /// ########################################

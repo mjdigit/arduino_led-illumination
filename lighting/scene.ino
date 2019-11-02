@@ -83,7 +83,7 @@ void sceneRandomFade (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
   currentTimeValue = ADJUSTED_TIME_VALUE (TIME_VALUE (tm), gTimeAdjust);
   endTimeValue = TIME_VALUE (endTm);
   if (endTimeValue > currentTimeValue &&
-      (endTimeValue - currentTimeValue) * 1000 < DEFAULT_INTERVAL + 30 * 100) {
+      (endTimeValue - currentTimeValue) * 1000 < DEFAULT_INTERVAL + 3000) {
     delayIdle ((endTimeValue - currentTimeValue) * 1000);
     return;
   }
