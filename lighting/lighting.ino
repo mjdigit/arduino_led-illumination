@@ -11,18 +11,6 @@ int mMode = 0;
 
 #define  START_TIME_STR  "12:00:00"
 SCENE_TABLE_ELEMENT defaultSceneElement = {"00:00:00", "00:00:00", sceneIdle};
-SCENE_TABLE_ELEMENT sceneTable[] = {
-  {"12:01:00", "12:02:00", sceneRandomFade},
-  {"12:02:00", "12:02:05", sceneFadeToNight},
-  {"12:02:00", "12:03:00", sceneNight},
-  {"12:03:00", "12:04:00", sceneFadeToMorning},
-  {"12:04:00", "12:05:00", sceneMorning},
-  {"12:05:00", "12:06:00", sceneFadeToNight},
-  {"12:06:00", "12:07:00", sceneNight},
-  {"12:07:00", "12:08:00", sceneCandle},
-  {"12:08:00", "12:08:05", sceneFadeToNight},
-  {"12:08:00", "12:09:00", sceneNight},
-};
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -73,6 +61,8 @@ void setup() {
 void loop() {
   tmElements_t tm;
   static int Minute = 0;
+  SCENE_TABLE_ELEMENT *sceneTable;
+  int elements;
   SCENE_TABLE_ELEMENT *sceneElement;
 
   RTC.read(tm);
@@ -81,11 +71,10 @@ void loop() {
     Minute = tm.Minute;
   }
 
-  sceneElement = getSceneElement (
-                   sceneTable,
-                   sizeof (sceneTable) / sizeof (sceneTable[0]),
-                   tm
-                   );
+  sceneElement = NULL;
+  if (getSceneTableByMode (mMode, &sceneTable, &elements)) {
+    sceneElement = getSceneElement (sceneTable, elements, tm);
+  }
   if (sceneElement == NULL) {
     sceneElement = &defaultSceneElement;
   }
