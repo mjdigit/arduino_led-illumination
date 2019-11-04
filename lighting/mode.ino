@@ -21,6 +21,14 @@ SCENE_TABLE_ELEMENT sceneTableFade[] = {
   {"00:00:00", "23:59:59", sceneRandomFade},
 };
 
+long getTimeRateByMode (int mode) {
+  switch (mode) {
+    case 13: return 16;
+    case 14: return 4;
+    default: return 1;
+  }
+}
+
 boolean getSceneTableByMode (
   int mode,
   SCENE_TABLE_ELEMENT **sceneTable,
@@ -36,6 +44,8 @@ boolean getSceneTableByMode (
       *sceneTable = sceneTableFade;
       *elements = sizeof (sceneTableFade) / sizeof (SCENE_TABLE_ELEMENT);
       break;
+    case 13:
+    case 14:
     case 15:
       *sceneTable = sceneTableDemo;
       *elements = sizeof (sceneTableDemo) / sizeof (SCENE_TABLE_ELEMENT);

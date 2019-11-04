@@ -3,7 +3,7 @@ long randRed;
 long randGreen;
 long randBlue;
 
-#define DEFAULT_INTERVAL (10000)
+#define DEFAULT_INTERVAL (10000 / gTimeRate)
 
 struct rgb mColorNight   = {15, 5, 30};
 struct rgb mColorMorning = {128, 96, 64};
@@ -20,6 +20,9 @@ SCENE_TABLE_ELEMENT* getSceneElement (
   tmElements_t endTm;
 
   currentTimeValue = ADJUSTED_TIME_VALUE (TIME_VALUE (tm), gTimeAdjust);
+  //DEBUG ((currentTimeValue));
+  //DEBUG ((", "));
+  currentTimeValue = MULTIPLIED_TIME_VALUE (currentTimeValue, gBaseTimeValue, gTimeRate);
   //DEBUGLN ((currentTimeValue));
   for (i = 0; i < elements; i++) {
     convertTimeToTm (table[i].startTimeStr, &startTm);
@@ -39,7 +42,13 @@ void sceneIdle (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
   controlLeds (32, 0, 0, 100);
   delay (50);
   controlLeds (0, 0, 0, 100);
-  delayWDT (WDT_DELAY_8S);
+
+  switch (gTimeRate) {
+    case  1: delayWDT (WDT_DELAY_8S); break;
+    case  4: delayWDT (WDT_DELAY_2S); break;
+    case 16: delayWDT (WDT_DELAY_500MS); break;
+    default: delayWDT (WDT_DELAY_8S); break;
+  }
 }
 
 static void fadeTo (char *startTimeStr, char *endTimeStr, struct rgb rgbTo) {
@@ -49,7 +58,7 @@ static void fadeTo (char *startTimeStr, char *endTimeStr, struct rgb rgbTo) {
 
   convertTimeToTm (startTimeStr, &startTm);
   convertTimeToTm (endTimeStr, &endTm);
-  intervalMs = 10 * (TIME_VALUE (endTm) - TIME_VALUE (startTm));
+  intervalMs = 10 * (TIME_VALUE (endTm) - TIME_VALUE (startTm)) / gTimeRate;
   
   fadeLeds (gCurrentRgb, rgbTo, intervalMs, 100);
 }
@@ -88,18 +97,18 @@ void sceneRandomFade (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
     return;
   }
 
-  #define MAX_PWM 100
+  #define MAX_PWM 255
   rgbValue.red   = random(MAX_PWM);
   rgbValue.green = random(MAX_PWM);
   rgbValue.blue  = random(MAX_PWM);
   debugPrintRgb (rgbValue, true);
-  fadeLeds (gCurrentRgb, rgbValue, 30, 100);
+  fadeLeds (gCurrentRgb, rgbValue, 32 / gTimeRate, 100);
 
   delayIdle (DEFAULT_INTERVAL);
 }
 
 void sceneCandle (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
-  struct rgb baseRgb = {100, 40, 5};
+  struct rgb baseRgb = {120, 40, 5};
   int rate = 50 + random(20);
 
   controlLeds (baseRgb.red, baseRgb.green, baseRgb.blue, rate);

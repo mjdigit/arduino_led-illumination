@@ -6,16 +6,18 @@
 
 DS3232RTC myRTC(false);
 struct rgb gCurrentRgb = {0, 0, 0};
-long gTimeAdjust = 0;
+long gBaseTimeValue = 0;
+long gTimeAdjust    = 0;
+long gTimeRate      = 1;
 int mMode = 0;
 
-#define  START_TIME_STR  "12:00:00"
+#define  BASE_TIME_STR  "12:00:00"
 SCENE_TABLE_ELEMENT defaultSceneElement = {"00:00:00", "00:00:00", sceneIdle};
 
 // the setup function runs once when you press reset or power the board
 void setup() {
   tmElements_t tm;
-  tmElements_t startTm;
+  tmElements_t baseTm;
 
   initializeDipPins ();
 
@@ -41,8 +43,12 @@ void setup() {
   #endif
 
   RTC.read(tm);
-  convertTimeToTm (START_TIME_STR, &startTm);
-  gTimeAdjust = TIME_VALUE(startTm) - TIME_VALUE(tm);
+  convertTimeToTm (BASE_TIME_STR, &baseTm);
+  gBaseTimeValue = TIME_VALUE(baseTm);
+  gTimeAdjust = gBaseTimeValue - TIME_VALUE(tm);
+  DEBUG (("Base: "));
+  DEBUG ((gBaseTimeValue));
+  DEBUG ((", Adjust: "));
   DEBUGLN ((gTimeAdjust));
 
   if (isSetMode ()) {
@@ -55,6 +61,8 @@ void setup() {
   }
   DEBUG (("Mode: "));
   DEBUGLN ((mMode));
+
+  gTimeRate = getTimeRateByMode (mMode);
 }
 
 // the loop function runs over and over again forever

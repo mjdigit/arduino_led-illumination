@@ -71,12 +71,16 @@ enum wdt_delay {
 /// function declaration
 /// ########################################
 extern struct rgb gCurrentRgb;
+extern long gBaseTimeValue;
 extern long gTimeAdjust;
+extern long gTimeRate;
 
 #define TIME_VALUE(tm)   ((long) 3600*(tm).Hour + 60*(tm).Minute + (tm).Second)
 #define ADJUSTED_TIME_VALUE(tv,adj) \
          (((tv) + (adj) < 0l)? ((tv) + (adj) + 24l * 3600): \
           (((tv) + (adj) >= 24l * 3600)? ((tv) + (adj) - 24l * 3600): ((tv) + (adj))))
+#define MULTIPLIED_TIME_VALUE(tv,base,rate) \
+          (((((tv) - (base)) * (rate)) + (base)) % (24l * 3600))
 
 void sceneIdle (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
 void sceneFadeToMorning (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
