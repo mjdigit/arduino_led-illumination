@@ -2,9 +2,9 @@
 #include "lighting_internal.h"
 
 bool controlLeds (int redValue, int greenValue, int blueValue, int ratio) {
-  redValue = (redValue * ratio) / 100;
+  redValue   = (redValue   * ratio) / 100;
   greenValue = (greenValue * ratio) / 100;
-  blueValue = (blueValue * ratio) / 100;
+  blueValue  = (blueValue  * ratio) / 100;
 
   if (redValue > 255 || greenValue > 255 || blueValue > 255) return false;
 

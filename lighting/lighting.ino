@@ -11,7 +11,7 @@ long gTimeAdjust    = 0;
 long gTimeRate      = 1;
 int mMode = 0;
 
-#define  BASE_TIME_STR  "12:00:00"
+#define  BASE_TIME_STR  "12:45:00"
 SCENE_TABLE_ELEMENT defaultSceneElement = {"00:00:00", "00:00:00", sceneIdle};
 
 // the setup function runs once when you press reset or power the board

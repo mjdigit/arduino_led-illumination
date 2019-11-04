@@ -1,16 +1,14 @@
 
 
 SCENE_TABLE_ELEMENT sceneTableDemo[] = {
-  {"12:01:00", "12:02:00", sceneRandomFade},
-  {"12:02:00", "12:02:05", sceneFadeToNight},
-  {"12:02:00", "12:03:00", sceneNight},
-  {"12:03:00", "12:04:00", sceneFadeToMorning},
-  {"12:04:00", "12:05:00", sceneMorning},
-  {"12:05:00", "12:06:00", sceneFadeToNight},
-  {"12:06:00", "12:07:00", sceneNight},
-  {"12:07:00", "12:08:00", sceneCandle},
-  {"12:08:00", "12:08:05", sceneFadeToNight},
-  {"12:08:00", "12:09:00", sceneNight},
+  {"12:30:00", "12:55:00", sceneRandomFade},
+  {"12:55:00", "12:58:00", sceneFadeToMorning},
+  {"12:58:00", "13:25:00", sceneMorning},
+  {"13:25:00", "13:30:00", sceneSunset},
+  {"13:30:00", "14:20:00", sceneNight},
+  {"14:20:00", "14:55:00", sceneCandle},
+  {"14:55:00", "14:55:05", sceneFadeToNight},
+  {"14:55:00", "15:30:00", sceneNight},
 };
 
 SCENE_TABLE_ELEMENT sceneTableCandle[] = {
