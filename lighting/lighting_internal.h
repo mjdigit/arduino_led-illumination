@@ -39,7 +39,7 @@ const int modePin4       = 9;
 /// ########################################
 
 typedef struct _SCENE_TABLE_ELEMENT SCENE_TABLE_ELEMENT;
-typedef void (*SCENE_FUNC) (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
+typedef void (*SCENE_FUNC) (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm, int mode);
 
 struct _SCENE_TABLE_ELEMENT {
   char        *startTimeStr; // "hh:mm:ss"
@@ -82,12 +82,15 @@ extern long gTimeRate;
 #define MULTIPLIED_TIME_VALUE(tv,base,rate) \
           (((((tv) - (base)) * (rate)) + (base)) % (24l * 3600))
 
-void sceneIdle (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
+void sceneIdle (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm, int mode);
+
+/*
 void sceneFadeToMorning (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
 void sceneFadeToNight (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
 void sceneMorning (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
 void sceneNight (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
 void sceneRandomFade (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
 void sceneCandle (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm);
+*/
 
 #endif /*_LIGHTING_INTERNAL_H_*/

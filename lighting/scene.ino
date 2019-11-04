@@ -42,7 +42,7 @@ SCENE_TABLE_ELEMENT* getSceneElement (
 }
 
 
-void sceneIdle (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
+void sceneIdle (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm, int mode) {
   controlLeds (32, 0, 0, 100);
   delay (50);
   controlLeds (0, 0, 0, 100);
@@ -83,41 +83,59 @@ static void fadeTo (
     );
 }
 
-void sceneFadeToMorning (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
+void sceneFadeToMorning (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm, int mode) {
   fadeTo (
     sceneElement->startTimeStr, sceneElement->endTimeStr,
     mColorMorning, sizeof (mColorMorning) / sizeof (struct rgb)
     );
 }
 
-void sceneFadeToNight (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
+void sceneFadeToNight (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm, int mode) {
   fadeTo (
     sceneElement->startTimeStr, sceneElement->endTimeStr,
     mColorNight, sizeof (mColorNight) / sizeof (struct rgb)
     );
 }
 
-void sceneSunset (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
+void sceneSunset (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm, int mode) {
   fadeTo (
     sceneElement->startTimeStr, sceneElement->endTimeStr,
     mColorSunset, sizeof (mColorSunset) / sizeof (struct rgb)
     );
 }
 
-void sceneNight (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
+void sceneNight (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm, int mode) {
   controlLeds (mColorNight[0].red, mColorNight[0].green, mColorNight[0].blue, 100);
   delayIdle (DEFAULT_INTERVAL);
 }
 
-void sceneMorning (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
+void sceneMorning (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm, int mode) {
   controlLeds (mColorMorning[0].red, mColorMorning[0].green, mColorMorning[0].blue, 100);
   delayIdle (DEFAULT_INTERVAL);
 }
 
-void sceneRandomFade (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
+struct randRange {
+  struct rgb from;
+  struct rgb to;
+};
+
+struct randRange randTable[] = {
+  {{0, 0, 0}, {255, 255, 255}},
+  {{0, 192, 192}, {127, 255, 255}},
+  {{192, 0, 0}, {255, 127, 127}},
+  {{0, 0, 192}, {127, 127, 255}},
+  {{192, 0, 192}, {255, 127, 255}},
+  {{192, 64, 0}, {255, 127, 63}},
+  {{0, 192, 0}, {127, 255, 127}},
+  {{192, 192, 0}, {255, 255, 127}},
+  {{0, 0, 0}, {255, 255, 255}},
+};
+
+void sceneRandomFade (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm, int mode) {
   tmElements_t endTm;
   long currentTimeValue, endTimeValue;
   struct rgb rgbValue;
+  struct randRange *range;
 
   int intervalMs;
 
@@ -130,10 +148,10 @@ void sceneRandomFade (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm) {
     return;
   }
 
-  #define MAX_PWM 255
-  rgbValue.red   = random(MAX_PWM);
-  rgbValue.green = random(MAX_PWM);
-  rgbValue.blue  = random(MAX_PWM);
+  range = (mode < 9)? &randTable[mode]: &randTable[0];
+  rgbValue.red   = range->from.red + random(range->to.red - range->from.red);
+  rgbValue.green = range->from.green + random(range->to.green - range->from.green);
+  rgbValue.blue  = range->from.blue + random(range->to.blue - range->from.blue);
   debugPrintRgb (rgbValue, true);
   fadeLeds (gCurrentRgb, rgbValue, 32 / gTimeRate, 100);
 

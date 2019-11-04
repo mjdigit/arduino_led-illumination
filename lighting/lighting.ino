@@ -87,5 +87,5 @@ void loop() {
     sceneElement = &defaultSceneElement;
   }
 
-  sceneElement->sceneFunc (sceneElement, tm);
+  sceneElement->sceneFunc (sceneElement, tm, mMode);
 }
