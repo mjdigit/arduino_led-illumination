@@ -7,7 +7,19 @@ long randBlue;
 
 struct rgb mColorNight[]   = {{15, 5, 30}};
 struct rgb mColorMorning[] = {{255, 191, 120}};
-struct rgb mColorSunset[]  = {
+struct rgb mColorSunset1_2_3[]  = {
+  {160, 120, 60}, {140, 30, 15}, {120, 30, 10},
+  {80, 10, 15}, {20, 0, 20}, {15, 5, 30}
+  };
+struct rgb mColorSunset4_5_6[]  = {
+  {180, 140, 70}, {160, 40, 20}, {150, 40, 20},
+  {100, 15, 30}, {20, 0, 20}, {15, 5, 30}
+  };
+struct rgb mColorSunset7_8[]  = {
+  {220, 150, 80}, {180, 40, 20}, {180, 40, 20},
+  {120, 20, 40}, {20, 0, 20}, {15, 5, 30}
+  };
+struct rgb mColorSunset9[]  = {
   {250, 120, 80}, {200, 40, 10}, {200, 40, 10},
   {120, 20, 40}, {20, 0, 20}, {15, 5, 30}
   };
@@ -98,10 +110,37 @@ void sceneFadeToNight (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm, int m
 }
 
 void sceneSunset (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm, int mode) {
-  fadeTo (
-    sceneElement->startTimeStr, sceneElement->endTimeStr,
-    mColorSunset, sizeof (mColorSunset) / sizeof (struct rgb)
-    );
+  switch (mode) {
+    case 1:
+    case 2:
+    case 3:
+      fadeTo (
+        sceneElement->startTimeStr, sceneElement->endTimeStr,
+        mColorSunset1_2_3, sizeof (mColorSunset1_2_3) / sizeof (struct rgb)
+        );
+      break;
+    case 4:
+    case 5:
+    case 6:
+      fadeTo (
+        sceneElement->startTimeStr, sceneElement->endTimeStr,
+        mColorSunset4_5_6, sizeof (mColorSunset4_5_6) / sizeof (struct rgb)
+        );
+      break;
+    case 7:
+    case 8:
+      fadeTo (
+        sceneElement->startTimeStr, sceneElement->endTimeStr,
+        mColorSunset7_8, sizeof (mColorSunset7_8) / sizeof (struct rgb)
+        );
+      break;
+    default:
+      fadeTo (
+        sceneElement->startTimeStr, sceneElement->endTimeStr,
+        mColorSunset9, sizeof (mColorSunset9) / sizeof (struct rgb)
+        );
+      break;
+  }
 }
 
 void sceneNight (SCENE_TABLE_ELEMENT *sceneElement, tmElements_t tm, int mode) {
