@@ -42,15 +42,6 @@ void setup() {
   }
   #endif
 
-  RTC.read(tm);
-  convertTimeToTm (BASE_TIME_STR, &baseTm);
-  gBaseTimeValue = TIME_VALUE(baseTm);
-  gTimeAdjust = gBaseTimeValue - TIME_VALUE(tm);
-  DEBUG (("Base: "));
-  DEBUG ((gBaseTimeValue));
-  DEBUG ((", Adjust: "));
-  DEBUGLN ((gTimeAdjust));
-
   if (isSetMode ()) {
     mMode = getModePin ();
     DEBUG (("Setup Mode to: "));
@@ -61,6 +52,19 @@ void setup() {
   }
   DEBUG (("Mode: "));
   DEBUGLN ((mMode));
+
+  RTC.read(tm);
+  if (mMode == 13 || mMode == 14 || mMode == 15) {
+    convertTimeToTm (BASE_TIME_STR, &baseTm);
+    gBaseTimeValue = TIME_VALUE(baseTm);
+    gTimeAdjust = gBaseTimeValue - TIME_VALUE(tm);
+  } else {
+    gBaseTimeValue = TIME_VALUE(tm);
+  }
+  DEBUG (("Base: "));
+  DEBUG ((gBaseTimeValue));
+  DEBUG ((", Adjust: "));
+  DEBUGLN ((gTimeAdjust));
 
   gTimeRate = getTimeRateByMode (mMode);
 }
